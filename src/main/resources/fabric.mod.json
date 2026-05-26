@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "cion_menu",
+	"version": "${version}",
+	"name": "Cion Menu",
+	"description": "Configuration menu for the Cion mod suite.",
+	"authors": [
+		"Cion"
+	],
+	"contact": {},
+	"license": "MPL-2.0",
+	"icon": "assets/cion_menu/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"cion.menu.CionMenu"
+		],
+		"client": [
+			"cion.menu.client.CionMenuClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~26.2-",
+		"java": ">=25",
+		"fabric-api": "*",
+		"cion_core": ">=0.1.0"
+	}
+}

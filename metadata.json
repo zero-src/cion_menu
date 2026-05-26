@@ -1,0 +1,43 @@
+{
+    "minecraft": "26.2",
+    "mod": {
+        "id": "cion_menu",
+        "group": "cion",
+        "name": "Cion Menu",
+        "version": "0.1.0",
+        "authors": [
+            "zero-src"
+        ],
+        "description": "Configuration menu for the Cion mod suite.",
+        "license": "MPL-2.0"
+    },
+    "dependencies": [
+        {
+            "name": "fabricapi",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "cion_core",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        }
+    ],
+    "links": [
+        {
+            "name": "github",
+            "slug": "cion_menu"
+        }
+    ],
+    "environments": {
+        "client": "required",
+        "server": "unsupported"
+    },
+    "platforms": [
+        "fabric"
+    ]
+}
