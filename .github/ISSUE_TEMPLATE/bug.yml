@@ -1,0 +1,53 @@
+name: "🔧 Bug report"
+description: >-
+  Report incorrect behavior. Supported versions are listed in README.md.
+title: "[Bug]: "
+labels: ["bug"]
+assignees:
+  - zero-src
+body:
+  - type: input
+    id: minecraft
+    attributes:
+      label: Minecraft version
+      description: Version where the issue happens.
+      placeholder: ex. 26.2
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Mod version
+      description: Version of this mod.
+      placeholder: ex. v0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: What happened?
+      description: Describe the problem, steps to reproduce, and expected behavior.
+      placeholder: >-
+        ex.
+
+        Current behavior: The feature does not work as expected.
+
+        Steps to reproduce:
+
+        1. Install the mod.
+
+        2. Launch the game and open a world.
+
+        3. Use the affected feature.
+
+        Expected: The feature works consistently.
+    validations:
+      required: true
+  - type: input
+    id: latest-log
+    attributes:
+      label: latest.log
+      description: Link to latest.log via mclo.gs or GitHub Gist.
+      placeholder: ex. https://mclo.gs/<paste_id>
+    validations:
+      required: true

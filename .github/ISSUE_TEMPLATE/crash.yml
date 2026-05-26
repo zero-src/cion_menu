@@ -1,0 +1,53 @@
+name: "💥 Crash report"
+description: >-
+  Report a game crash. Supported versions are listed in README.md.
+title: "[Crash]: "
+labels: ["bug", "high priority"]
+assignees:
+  - zero-src
+body:
+  - type: input
+    id: minecraft
+    attributes:
+      label: Minecraft version
+      description: Version where the crash happens.
+      placeholder: ex. 26.2
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Mod version
+      description: Version of this mod.
+      placeholder: ex. v0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Steps to reproduce
+      description: List the actions that lead to the crash.
+      placeholder: >-
+        ex.
+
+        1. Install the mod.
+
+        2. Launch the game and open a world.
+
+        3. The game crashes.
+    validations:
+      required: true
+  - type: input
+    id: crash-report
+    attributes:
+      label: Crash report
+      description: Link to the crash report via mclo.gs or GitHub Gist.
+      placeholder: ex. https://mclo.gs/<paste_id>
+    validations:
+      required: true
+  - type: input
+    id: latest-log
+    attributes:
+      label: latest.log
+      description: Link to latest.log, if available.
+      placeholder: ex. https://mclo.gs/<paste_id>

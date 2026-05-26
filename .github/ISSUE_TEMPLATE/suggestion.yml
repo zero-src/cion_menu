@@ -1,0 +1,29 @@
+name: "✨ Suggestion"
+description: >-
+  Suggest an improvement or new feature.
+title: "[Suggestion]: "
+labels: ["enhancement"]
+assignees:
+  - zero-src
+body:
+  - type: input
+    id: minecraft
+    attributes:
+      label: Minecraft version
+      description: Relevant version, if any.
+      placeholder: ex. 26.2
+  - type: input
+    id: version
+    attributes:
+      label: Mod version
+      description: Relevant mod version, if any.
+      placeholder: ex. v0.1.0
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggestion
+      description: Describe the change and why it would be useful.
+      placeholder: >-
+        ex. Add a config option for adjusting this behavior.
+    validations:
+      required: true
