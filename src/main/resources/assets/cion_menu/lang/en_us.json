@@ -1,4 +1,8 @@
 {
 	"cion_menu.title": "Cion Menu",
-	"cion_menu.test_screen.message": "Cion Menu GUI test screen"
+	"cion_menu.config.title": "Cion Configuration",
+	"cion_menu.config.save": "Save",
+	"cion_menu.config.bool.on": "ON",
+	"cion_menu.config.bool.off": "OFF",
+	"cion_menu.config.empty": "No Cion mods registered configs."
 }

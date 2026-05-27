@@ -1,6 +1,7 @@
 package cion.menu.client;
 
 import cion.menu.CionMenu;
+import cion.menu.client.gui.CionConfigScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
@@ -9,11 +10,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.SpriteIconButton;
 import net.minecraft.client.gui.components.WidgetSprites;
-import net.minecraft.client.gui.screens.AlertScreen;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
@@ -21,7 +20,6 @@ import java.util.List;
 @Environment(EnvType.CLIENT)
 public final class CionMenuScreens {
 	private static final Component TITLE = Component.translatable("cion_menu.title");
-	private static final Component TEST_MESSAGE = Component.translatable("cion_menu.test_screen.message");
 	private static final WidgetSprites MENU_BUTTON_SPRITES = new WidgetSprites(CionMenu.id("button/menu"));
 	private static final int BUTTON_SIZE = 20;
 	private static final int ICON_SIZE = 16;
@@ -72,13 +70,6 @@ public final class CionMenuScreens {
 	}
 
 	private static void openMenu(Screen parent) {
-		Minecraft client = Minecraft.getInstance();
-		client.setScreenAndShow(new AlertScreen(
-				() -> client.setScreenAndShow(parent),
-				TITLE,
-				TEST_MESSAGE,
-				CommonComponents.GUI_DONE,
-				true
-		));
+		Minecraft.getInstance().setScreenAndShow(new CionConfigScreen(parent));
 	}
 }
