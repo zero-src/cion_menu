@@ -1,28 +1,32 @@
 package cion.menu.client;
 
 import cion.menu.CionMenu;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.SpriteIconButton;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.SpriteIconButton;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.AlertScreen;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
+@Environment(EnvType.CLIENT)
 public final class CionMenuScreens {
-	private static final Component TITLE = Component.literal("Cion Menu");
-	private static final Component TEST_MESSAGE = Component.literal("Cion Menu GUI test screen");
+	private static final Component TITLE = Component.translatable("cion_menu.title");
+	private static final Component TEST_MESSAGE = Component.translatable("cion_menu.test_screen.message");
 	private static final WidgetSprites MENU_BUTTON_SPRITES = new WidgetSprites(CionMenu.id("button/menu"));
 	private static final int BUTTON_SIZE = 20;
 	private static final int ICON_SIZE = 16;
+	private static final int BUTTON_GAP = 4;
+	private static final boolean ICON_ONLY = true;
 
 	private CionMenuScreens() {}
 
@@ -31,44 +35,49 @@ public final class CionMenuScreens {
 	}
 
 	private static void afterInit(Minecraft client, Screen screen, int width, int height) {
-		if (screen instanceof TitleScreen) {
-			addMenuButton(client, screen, width / 2 + 84, height / 4 + 132);
-		}
-
-		if (screen instanceof PauseScreen) {
-			addMenuButton(client, screen, width / 2 + 42, height / 4 + 96);
+		if (screen instanceof TitleScreen || screen instanceof PauseScreen) {
+			addMenuButton(screen);
 		}
 	}
 
-	private static void addMenuButton(Minecraft client, Screen screen, int x, int y) {
-		Optional<AbstractWidget> rowEnd = findLastSmallButton(Screens.getWidgets(screen));
-		if (rowEnd.isPresent()) {
-			AbstractWidget lastButton = rowEnd.get();
-			x = lastButton.getRight() + 4;
-			y = lastButton.getY();
+	private static void addMenuButton(Screen screen) {
+		List<AbstractWidget> widgets = Screens.getWidgets(screen);
+		AbstractWidget anchor = findIconRowAnchor(widgets);
+		if (anchor == null) {
+			CionMenu.LOGGER.warn("No 20x20 icon-row anchor on {}; menu button skipped", screen.getClass().getSimpleName());
+			return;
 		}
 
-		AbstractWidget button = SpriteIconButton.builder(TITLE, pressed -> openMenu(client, screen), true)
+		AbstractWidget button = SpriteIconButton.builder(TITLE, pressed -> openMenu(screen), ICON_ONLY)
 				.size(BUTTON_SIZE, BUTTON_SIZE)
 				.sprite(MENU_BUTTON_SPRITES, ICON_SIZE, ICON_SIZE)
 				.withTootip()
 				.build();
-		button.setPosition(x, y);
-		Screens.getWidgets(screen).add(button);
+		button.setPosition(anchor.getRight() + BUTTON_GAP, anchor.getY());
+		widgets.add(button);
 	}
 
-	private static Optional<AbstractWidget> findLastSmallButton(List<AbstractWidget> widgets) {
-		return widgets.stream()
-				.filter(widget -> widget.visible && widget.getWidth() == BUTTON_SIZE && widget.getHeight() == BUTTON_SIZE)
-				.max(Comparator.comparingInt(AbstractWidget::getY).thenComparingInt(AbstractWidget::getRight));
+	private static AbstractWidget findIconRowAnchor(List<AbstractWidget> widgets) {
+		AbstractWidget best = null;
+		for (AbstractWidget widget : widgets) {
+			if (!widget.visible) continue;
+			if (widget.getWidth() != BUTTON_SIZE || widget.getHeight() != BUTTON_SIZE) continue;
+			if (best == null
+					|| widget.getY() > best.getY()
+					|| (widget.getY() == best.getY() && widget.getRight() > best.getRight())) {
+				best = widget;
+			}
+		}
+		return best;
 	}
 
-	private static void openMenu(Minecraft client, Screen parent) {
+	private static void openMenu(Screen parent) {
+		Minecraft client = Minecraft.getInstance();
 		client.setScreenAndShow(new AlertScreen(
 				() -> client.setScreenAndShow(parent),
 				TITLE,
 				TEST_MESSAGE,
-				Component.literal("Done"),
+				CommonComponents.GUI_DONE,
 				true
 		));
 	}

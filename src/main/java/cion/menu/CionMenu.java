@@ -5,7 +5,7 @@ import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CionMenu implements ModInitializer {
+public final class CionMenu implements ModInitializer {
 	public static final String MOD_ID = "cion_menu";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
